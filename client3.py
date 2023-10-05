@@ -47,6 +47,17 @@ def getRatio(price_a, price_b):
 
 
 
+def getPriceBidGreaterThanAsk(quote):
+    stock = quote['stock']
+    bid_price = float(quote['top_bid']['price'])
+    ask_price = float(quote['top_ask']['price'])
+    
+    if bid_price<=ask_price: return False,[]
+    
+    price = (bid_price + ask_price)/2
+    return True,[stock, bid_price, ask_price, price]
+
+
 # Main
 if __name__ == "__main__":
     # Query the price once every N seconds.
@@ -60,4 +71,4 @@ if __name__ == "__main__":
             prices[stock] = price
             print("Quoted %s at (bid:%s, ask:%s, price:%s)" % (stock, bid_price, ask_price, price))
 
-        print("Ratio %s" % getRatio(prices["ABC"], price["DEF"]))
+        print("Ratio %s" % getRatio(prices["ABC"], prices["DEF"]))
